@@ -55,7 +55,7 @@ def data_loaders():
         image_folder=config.img_folder,
         transform=transform,
         le=encoder,
-        csv_path=tr_csv_path,
+        csv_path=val_csv_path,
         feature_name=feature_name
     )
 
@@ -63,7 +63,7 @@ def data_loaders():
         image_folder=config.img_folder,
         transform=transform,
         le=encoder,
-        csv_path=tr_csv_path,
+        csv_path=te_csv_path,
         feature_name=feature_name
     )
 
