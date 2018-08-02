@@ -14,15 +14,12 @@ random.seed(1137)
 class LabelDataset(Dataset):
     def __init__(self, csv_path=None, image_folder=None, feature_name=None, le=None, transform=None):
         df = pd.read_csv(csv_path)
-        print(df.shape)
         index_name = 'URUNANA_ID'
         df[index_name] = df[index_name].astype(str)
         img_filenames = os.listdir(image_folder)
         img_urunana_ids = [i.split('_')[0] for i in img_filenames]
         img_df = pd.DataFrame({index_name: img_urunana_ids, 'path': img_filenames})
-        print(img_df.shape)
         tmp_df = pd.merge(df, img_df, on=[index_name])
-        print(tmp_df.shape)
         self.image_folder = image_folder
         self.transform = transform
         self.num_inputs = 1
@@ -39,4 +36,5 @@ class LabelDataset(Dataset):
         return img, self.y[index]
 
     def __len__(self):
+        print(len(self.X.index))
         return len(self.X.index)

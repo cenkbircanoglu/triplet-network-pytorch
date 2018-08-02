@@ -31,6 +31,8 @@ def run():
     create_dirs()
     device = 0 if torch.cuda.is_available() else -1
 
+    tr_data_loader, val_data_loader, te_data_loader = loaders.data_loaders()
+
     model = getattr(models, config.network).get_network()(embedding_size=config.embedding)
 
     check_point = os.path.join(config.result_dir, "ckpt.pth.tar")
@@ -52,7 +54,6 @@ def run():
 
     trainer.compile(loss=criterion, optimizer='adam')
 
-    tr_data_loader, val_data_loader, te_data_loader = loaders.data_loaders()
 
     logging.info('Train Prediction')
     tr_y_pred = trainer.predict_loader(tr_data_loader, cuda_device=device)
