@@ -42,6 +42,7 @@ def run():
                      .format(check_point, checkpoint['epoch']))
     else:
         logging.info("=> no checkpoint found at '{}'".format(check_point))
+        return
     margin = 1.
     criterion = OnlineTripletLoss(margin, SemihardNegativeTripletSelector(margin))
     if device == 0:

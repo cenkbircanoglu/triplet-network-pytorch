@@ -38,7 +38,7 @@ def run():
     trainer = ModuleTrainer(model)
     epochs = config.epochs
 
-    callbacks = [EarlyStopping(monitor='val_loss', patience=50),
+    callbacks = [EarlyStopping(monitor='val_loss', patience=20),
                  ModelCheckpoint(config.result_dir, save_best_only=True, verbose=1),
                  CSVLogger("%s/logger.csv" % config.result_dir)]
 

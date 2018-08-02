@@ -118,9 +118,15 @@ def online_triplet_loaders():
         feature_name=feature_name
     )
 
-    train_batch_sampler = BalancedBatchSampler(tr_dataset.X, tr_dataset.y, n_classes=8, n_samples=int(batch_size / 8))
-    val_batch_sampler = BalancedBatchSampler(val_dataset.X, val_dataset.y, n_classes=8, n_samples=int(batch_size / 8))
-    test_batch_sampler = BalancedBatchSampler(te_dataset.X, te_dataset.y, n_classes=8, n_samples=int(batch_size / 8))
+    n_classes = 8
+
+    n_tr_classes = len(set(tr_dataset.y))
+    if n_tr_classes < n_classes:
+        n_classes = n_tr_classes
+    n_samples = int(batch_size / n_classes)
+    train_batch_sampler = BalancedBatchSampler(tr_dataset.X, tr_dataset.y, n_classes=n_classes, n_samples=n_samples)
+    val_batch_sampler = BalancedBatchSampler(val_dataset.X, val_dataset.y, n_classes=n_classes, n_samples=n_samples)
+    test_batch_sampler = BalancedBatchSampler(te_dataset.X, te_dataset.y, n_classes=n_classes, n_samples=n_samples)
 
     kwargs = {'num_workers': 16, 'pin_memory': True} if torch.cuda.is_available() else {}
     tr_data_loader = DataLoader(tr_dataset, batch_sampler=train_batch_sampler, **kwargs)
