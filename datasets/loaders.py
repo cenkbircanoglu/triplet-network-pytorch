@@ -30,7 +30,7 @@ def train_encoder(tr_csv_path, val_csv_path, te_csv_path, feature_name):
     return le
 
 
-def data_loaders():
+def data_loaders(shuffle=False):
     config = BaseConfig()
 
     batch_size = config.batch_size
@@ -69,15 +69,15 @@ def data_loaders():
 
     kwargs = {'num_workers': 16, 'pin_memory': True} if torch.cuda.is_available() else {}
     tr_data_loader = DataLoader(tr_dataset,
-                                shuffle=False,
+                                shuffle=shuffle,
                                 batch_size=batch_size, **kwargs)
 
     val_data_loader = DataLoader(val_dataset,
-                                 shuffle=False,
+                                 shuffle=shuffle,
                                  batch_size=batch_size, **kwargs)
 
     te_data_loader = DataLoader(te_dataset,
-                                shuffle=False,
+                                shuffle=shuffle,
                                 batch_size=batch_size, **kwargs)
 
     return tr_data_loader, val_data_loader, te_data_loader

@@ -54,13 +54,13 @@ def run():
 
     trainer.compile(loss=criterion, optimizer='adam')
 
-
     logging.info('Train Prediction')
     tr_y_pred = trainer.predict_loader(tr_data_loader, cuda_device=device)
     logging.info('Train Save Embeddings')
     save_embeddings(tr_y_pred, '%s/train_embeddings.csv' % config.result_dir)
     logging.info('Train Save Labels')
     save_labels(tr_data_loader, '%s/train_labels.csv' % config.result_dir)
+    tr_data_loader.dataset.id_list.to_csv('%s/train_ids.csv' % config.result_dir, header=None, index=None)
 
     logging.info('Validation Prediction')
     val_y_pred = trainer.predict_loader(val_data_loader, cuda_device=device)
@@ -68,6 +68,7 @@ def run():
     save_embeddings(val_y_pred, '%s/val_embeddings.csv' % config.result_dir)
     logging.info('Validation Save Labels')
     save_labels(val_data_loader, '%s/val_labels.csv' % config.result_dir)
+    val_data_loader.dataset.id_list.to_csv('%s/val_ids.csv' % config.result_dir, header=None, index=None)
 
     logging.info('Test Prediction')
     te_y_pred = trainer.predict_loader(te_data_loader, cuda_device=device)
@@ -75,6 +76,7 @@ def run():
     save_embeddings(te_y_pred, '%s/test_embeddings.csv' % config.result_dir)
     logging.info('Test Save Labels')
     save_labels(te_data_loader, '%s/test_labels.csv' % config.result_dir)
+    te_data_loader.dataset.id_list.to_csv('%s/test_ids.csv' % config.result_dir, header=None, index=None)
 
 
 def save_embeddings(data, outputfile):

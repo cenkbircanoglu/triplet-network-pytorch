@@ -27,6 +27,7 @@ class LabelDataset(Dataset):
 
         self.X = tmp_df['path']
         self.y = le.transform(tmp_df[feature_name].values)
+        self.id_list = tmp_df[index_name]
 
     def __getitem__(self, index):
         img = Image.open(os.path.join(self.image_folder, self.X[index]))

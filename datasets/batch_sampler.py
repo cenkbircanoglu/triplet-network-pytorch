@@ -18,7 +18,7 @@ class BalancedBatchSampler(BatchSampler):
         batch_size = n_classes * n_samples
         if len(self.labels_set) < 8:
             n_classes = len(self.labels_set)
-            n_samples = batch_size / n_classes
+            n_samples = int(batch_size / n_classes)
         self.label_to_indices = {label: np.where(np.array(self.labels) == label)[0]
                                  for label in self.labels_set}
         for l in self.labels_set:
